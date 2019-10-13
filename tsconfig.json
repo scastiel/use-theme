@@ -2,16 +2,17 @@
   "compilerOptions": {
     "target": "esnext",
     "jsx": "react",
-    "allowSyntheticDefaultImports": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
-    "types": ["react"],
+    "types": ["react", "jest"],
     "skipLibCheck": true,
     "sourceRoot": "src",
-    "outDir": "dist"
+    "outDir": "dist",
+    "esModuleInterop": true
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx"]
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["*.test.ts", "*.test.tsx"]
 }
