@@ -1,0 +1,25 @@
+{
+  "name": "use-theme",
+  "version": "0.1.0",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "scripts": {
+    "lint": "tslint -p .",
+    "typecheck": "tsc --noEmit",
+    "verify": "yarn lint && yarn typecheck",
+    "build": "tsc",
+    "prepare": "yarn verify && yarn build"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "tslib": "*"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.5",
+    "tslib": "^1.10.0",
+    "tslint": "^5.20.0",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-config-standard": "^8.0.1",
+    "typescript": "^3.6.4"
+  }
+}
