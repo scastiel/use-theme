@@ -8,7 +8,7 @@
     "typecheck": "tsc --noEmit",
     "test": "jest",
     "verify": "yarn lint && yarn typecheck",
-    "build": "tsc",
+    "build": "tsc -p tsconfig.build.json",
     "prepublish": "yarn verify && yarn build"
   },
   "peerDependencies": {

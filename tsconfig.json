@@ -13,6 +13,5 @@
     "outDir": "dist",
     "esModuleInterop": true
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx"],
-  "exclude": ["**/__tests__/**/*"]
+  "include": ["src/**/*.ts", "src/**/*.tsx"]
 }
