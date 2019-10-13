@@ -12,9 +12,12 @@ import { getBrowserTheme, onBrowserThemeChanged } from './browserTheme'
 import { getLocalStorageTheme, setLocalStorageTheme } from './localStorage'
 import { ThemeName } from './theme'
 
-const ThemeContext: Context<
-  [ThemeName, Dispatch<SetStateAction<ThemeName>>]
-> = createContext(['light' as ThemeName, _ => {}])
+// FIXME we have to give createContext a valid initial value even if in this
+// case it will never be used.
+const ThemeContext = createContext(([null, null] as unknown) as [
+  ThemeName,
+  Dispatch<SetStateAction<ThemeName>>
+])
 
 export const ThemeProvider: FC = ({ children }) => {
   const [theme, setTheme] = useState<ThemeName>(

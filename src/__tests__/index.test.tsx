@@ -1,9 +1,26 @@
 import { fireEvent, render } from '@testing-library/react'
 import React, { FC, useCallback } from 'react'
 import { act } from 'react-dom/test-utils'
-import { ThemeProvider, useTheme } from '../context'
+import { ThemeProvider, useTheme } from '../index'
 
-global.window = {}
+beforeEach(() => {
+  global.window = {}
+  localStorage.removeItem('theme')
+})
+
+const getMql = (matches: boolean) => ({
+  matches,
+  addListener(callback: (e: any) => void) {
+    this._callback = callback
+  },
+  removeListener() {
+    this._callback = null
+  },
+  _callback: null as (null | ((e: any) => void))
+})
+
+const getMatchMedia = (mql: ReturnType<typeof getMql>) => (query: string) =>
+  query === '(prefers-color-scheme: dark)' ? mql : null
 
 const TestComponent: FC = () => {
   const [theme, setTheme] = useTheme()
@@ -36,29 +53,27 @@ test('without window.matchMedia', () => {
   expect(getByTestId('theme').innerHTML).toEqual('dark')
 })
 
-test('with window.matchMedia', () => {
-  const mql = {
-    matches: true,
-    addListener(callback: (e: any) => void) {
-      this._callback = callback
-    },
-    removeListener() {
-      this._callback = null
-    },
-    _callback: null as (null | ((e: any) => void))
-  }
-  global.window.matchMedia = (query: string) =>
-    query === '(prefers-color-scheme: dark)' ? mql : null
+test('with window.matchMedia, dark theme', () => {
+  const mql = getMql(true)
+  global.window.matchMedia = getMatchMedia(mql)
 
   const { getByTestId } = render(<App />)
   expect(getByTestId('theme').innerHTML).toEqual('dark')
-  fireEvent.click(getByTestId('btnToggleTheme'))
+
+  expect(mql._callback).not.toBeNull()
+  act(() => mql._callback!({ matches: false }))
+  expect(getByTestId('theme').innerHTML).toEqual('light')
+})
+
+test('with window.matchMedia, light theme', () => {
+  const mql = getMql(false)
+  global.window.matchMedia = getMatchMedia(mql)
+
+  const { getByTestId } = render(<App />)
   expect(getByTestId('theme').innerHTML).toEqual('light')
 
   expect(mql._callback).not.toBeNull()
-  act(() => {
-    mql._callback!({ matches: true })
-  })
+  act(() => mql._callback!({ matches: true }))
   expect(getByTestId('theme').innerHTML).toEqual('dark')
 })
 
