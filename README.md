@@ -1,7 +1,19 @@
+[![Build Status](https://travis-ci.org/scastiel/use-theme.svg?branch=master)](https://travis-ci.org/scastiel/use-theme)
+
+## Install
+
+```shell
+# With Ypm
+$ npm install use-theme
+
+# With Yarn
+$ yarn add use-theme
+```
+
 ## Usage
 
 ```js
-import React, { useCallbacl } from 'react'
+import React, { useCallback } from 'react'
 import { useTheme, ThemeProvider } from 'use-theme'
 
 const ChangeThemeButton = ({ children, theme }) => {

@@ -6,16 +6,23 @@
   "scripts": {
     "lint": "tslint -p .",
     "typecheck": "tsc --noEmit",
+    "test": "jest",
     "verify": "yarn lint && yarn typecheck",
-    "build": "tsc",
-    "prepare": "yarn verify && yarn build"
+    "build": "tsc -p tsconfig.build.json",
+    "prepublish": "yarn verify && yarn build"
   },
   "peerDependencies": {
     "react": ">=16.8.0",
     "tslib": "*"
   },
   "devDependencies": {
+    "@testing-library/react": "^9.3.0",
+    "@types/jest": "^24.0.18",
     "@types/react": "^16.9.5",
+    "jest": "^24.9.0",
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2",
+    "ts-jest": "^24.1.0",
     "tslib": "^1.10.0",
     "tslint": "^5.20.0",
     "tslint-config-prettier": "^1.18.0",
