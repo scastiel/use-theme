@@ -44,7 +44,7 @@ export const ThemeProvider: FC = ({ children }) => {
       setTheme(getLocalStorageTheme() || getBrowserTheme())
       setInitialized(true)
     }
-    onBrowserThemeChanged(updateTheme)
+    return onBrowserThemeChanged(updateTheme)
   }, [updateTheme, setTheme, initialized, setInitialized])
 
   return initialized ? (
