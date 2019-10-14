@@ -1,9 +1,9 @@
 import React, {
-  Context,
   createContext,
   Dispatch,
   FC,
   SetStateAction,
+  useCallback,
   useContext,
   useEffect,
   useState
@@ -20,30 +20,38 @@ const ThemeContext = createContext(([null, null] as unknown) as [
 ])
 
 export const ThemeProvider: FC = ({ children }) => {
-  const [theme, setTheme] = useState<ThemeName>(
-    getLocalStorageTheme() || getBrowserTheme()
+  const [initialized, setInitialized] = useState(false)
+  const [theme, setTheme] = useState<ThemeName>('light')
+
+  const updateTheme: Dispatch<SetStateAction<ThemeName>> = useCallback(
+    newTheme => {
+      if (typeof newTheme === 'function') {
+        setTheme(currentTheme => {
+          const actualNewTheme = newTheme(currentTheme)
+          setLocalStorageTheme(actualNewTheme)
+          return actualNewTheme
+        })
+      } else {
+        setLocalStorageTheme(newTheme)
+        setTheme(newTheme)
+      }
+    },
+    [setTheme]
   )
 
-  const updateTheme: Dispatch<SetStateAction<ThemeName>> = newTheme => {
-    if (typeof newTheme === 'function') {
-      setTheme(currentTheme => {
-        const actualNewTheme = newTheme(currentTheme)
-        setLocalStorageTheme(actualNewTheme)
-        return actualNewTheme
-      })
-    } else {
-      setLocalStorageTheme(newTheme)
-      setTheme(newTheme)
+  useEffect(() => {
+    if (!initialized) {
+      setTheme(getLocalStorageTheme() || getBrowserTheme())
+      setInitialized(true)
     }
-  }
+    return onBrowserThemeChanged(updateTheme)
+  }, [setTheme, initialized, setInitialized, updateTheme])
 
-  useEffect(() => onBrowserThemeChanged(updateTheme), [])
-
-  return (
+  return initialized ? (
     <ThemeContext.Provider value={[theme, updateTheme]}>
       {children}
     </ThemeContext.Provider>
-  )
+  ) : null
 }
 
 export const useTheme = () => useContext(ThemeContext)
