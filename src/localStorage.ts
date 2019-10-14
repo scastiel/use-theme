@@ -1,7 +1,10 @@
 import { ThemeName } from './theme'
 
 export const getLocalStorageTheme = () => {
-  const localTheme = localStorage.getItem('theme') as ThemeName
+  const localTheme =
+    window &&
+    window.localStorage &&
+    (window.localStorage.getItem('theme') as ThemeName)
   if (localTheme && ['light', 'dark'].includes(localTheme)) {
     return localTheme
   }

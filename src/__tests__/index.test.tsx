@@ -4,7 +4,6 @@ import { act } from 'react-dom/test-utils'
 import { ThemeProvider, useTheme } from '../index'
 
 beforeEach(() => {
-  global.window = {}
   localStorage.removeItem('theme')
 })
 
@@ -55,7 +54,7 @@ test('without window.matchMedia', () => {
 
 test('with window.matchMedia, dark theme', () => {
   const mql = getMql(true)
-  global.window.matchMedia = getMatchMedia(mql)
+  ;(window as any).matchMedia = getMatchMedia(mql)
 
   const { getByTestId } = render(<App />)
   expect(getByTestId('theme').innerHTML).toEqual('dark')
@@ -67,7 +66,7 @@ test('with window.matchMedia, dark theme', () => {
 
 test('with window.matchMedia, light theme', () => {
   const mql = getMql(false)
-  global.window.matchMedia = getMatchMedia(mql)
+  ;(window as any).matchMedia = getMatchMedia(mql)
 
   const { getByTestId } = render(<App />)
   expect(getByTestId('theme').innerHTML).toEqual('light')
