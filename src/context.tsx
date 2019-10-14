@@ -20,6 +20,10 @@ const ThemeContext = createContext(([null, null] as unknown) as [
 ])
 
 export const ThemeProvider: FC = ({ children }) => {
+  // FIXME it’s necessary to fetch theme from local storage or browser
+  // before the useEffect, althought it's a side effect and requires
+  // some tricks for server side rendering. But otherwise there’s a
+  // flashing white screen when navigating between pages.
   const [theme, setTheme] = useState<ThemeName>(
     getLocalStorageTheme() || getBrowserTheme()
   )
