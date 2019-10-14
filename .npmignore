@@ -1,3 +1,7 @@
+coverage
+src
 .nvmrc
+jest.config.js
 tsconfig.json
+tsconfig.build.json
 tslint.json

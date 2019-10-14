@@ -3,7 +3,7 @@
 ## Install
 
 ```shell
-# With Ypm
+# With NPM
 $ npm install use-theme
 
 # With Yarn
