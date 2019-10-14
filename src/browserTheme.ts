@@ -2,10 +2,7 @@
 import { ThemeName } from './theme'
 
 const getMql = () =>
-  // tslint:disable-next-line: strict-type-predicates
-  (typeof window !== 'undefined' &&
-    window.matchMedia &&
-    window.matchMedia('(prefers-color-scheme: dark)')) ||
+  (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)')) ||
   undefined
 
 export const getBrowserTheme = () => {

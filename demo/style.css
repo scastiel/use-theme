@@ -1,0 +1,26 @@
+.app {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: sans-serif;
+  font-size: 1.5rem;
+}
+
+.app.dark {
+  background-color: black;
+  color: white;
+}
+
+button {
+  background-color: transparent;
+  color: inherit;
+  padding: 3em;
+  font-size: inherit;
+  border-style: none;
+  cursor: pointer;
+}
